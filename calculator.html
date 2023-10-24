@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>matrix calculator</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+      integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+      integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+      crossorigin="anonymous"
+    ></script>
+    <script src="file.js" async></script>
+    <style>
+        #display,
+      button {
+        width: 50px;
+        padding: 10px;
+        margin: 10px;
+        border: 1px solid gray;
+        border-radius: 20px;
+        box-shadow: 2px 2px gray;
+        font: Impact;
+        outline: none;
+      }
+      
+    #txtbtn {
+        font-size: 13px;
+        padding: 12px 0px 0px 0px;
+    }
+
+    #txtbtn a {
+        border-radius: 3px;
+        background: #333;
+        padding: 5px 3px;
+        font-size: 15px;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    #txtbtn a:hover {
+        background: rgb(75, 108, 73);
+        color: #fff;
+    }
+
+    .matrixTable {
+        border-spacing: 0px;
+        border-collapse: separate;
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+    }
+
+    .matrixTable th {
+        padding: 0px;
+    }
+
+    .matrixTable th:nth-child(1) {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        width: 3px;
+    }
+
+    .matrixTable th:nth-child(3) {
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        width: 3px;
+    }
+
+    .matrixTable td {
+        padding: 0px 5px;
+        text-align: right;
+    }
+
+    .err {
+        color: #c12a10;
+    }
+    #submitbtn input, #submitbtn button {
+        border: 30px;
+        border-radius: 48%;
+        background: #384d32;
+        padding: 10px 50px;
+        font-size: 14px;
+        color: #fff;
+    }
+
+    #submitbtn input:hover, #submitbtn button:hover {
+        background: #4c6d40;
+        color: #fff;
+    }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container my-2">
+        <a class="navbar-brand p-0" href="/">
+            <img src="#" alt="Logo" width="50" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="home.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="calculator-menu-page.html">Menu</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="additional.html"
+                >Something</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div id="clear"></div>
+    <div class="container text-center">
+    <div id="contentout">
+        <div id="content">
+            <h1>Матричный калькулятор</h1>
+            <form name="calcf">
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <div class="panel" style="display: inline-block;vertical-align: text-top;">
+                                <div id="sectitle">Введите матрицу А</div>
+                                <table>
+                                    <tr>
+                                        <td text-align="center">строка</td>
+                                        <td>&nbsp;</td>
+                                        <td>&nbsp;</td>
+                                        <td colspan="2">столбец</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="number" name="arow" value="3" class="in3char" min="1" max="10" onBlur="updateInput('a');">
+                                        </td>
+                                        <td class="verybigtext">&nbsp; &#215;</td>
+                                        <td>
+                                            <input type="number" name="acolumn" value="3" class="in3char" min="1" max="10" onBlur="updateInput('a');">
+                                        </td>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div id="minputa"></div>
+                <div style="text-align:center;" id="txtbtn">
+                    <a href="#" onClick="return popValue('a', '');">Очистить</a>
+                    <a href="#" onClick="return popValue('a', 0);">Все 0</a>
+                    <a href="#" onClick="return popValue('a', 1);">Все 1</a>
+                    <a href="#" onClick="return popValue('a', 'r');">Рандом</a>
+                </div>
+                <div style="text-align:center;" id="txtbtn">
+                    <a href="#" onClick="return cTranspose('a');">Транспонирование</a>
+                    <a href="#" onClick="return cPower('a');">Матрица в степени</a>
+                    <input type="number" name="pa" value="2" class="in3char">
+                </div>
+                <div style="text-align:center;margin-top: -5px;" id="txtbtn">
+                    <a href="#" onClick="return cDeterminant('a');">Детерминант</a>
+                    <a href="#" onClick="return cInverse('a');">Обратная матрица</a>
+                    <input type="number" name="ta" value="3" class="in3char">
+                </div>
+        </div>
+        <div class="panel" style="display: inline-block;vertical-align: text-top;">
+            <p> </p>
+            <div id="sectitle">Введите матрицу В</div>
+            <table>
+                <tr>
+                    <td align="center">строка</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td colspan="2">столбец</td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="number" name="brow" value="3" class="in3char" min="1" max="10" onBlur="updateInput('b');">
+                    </td>
+                    <td class="verybigtext">&nbsp; &#215;</td>
+                    <td>
+                        <input type="number" name="bcolumn" value="3" class="in3char" min="1" max="10" onBlur="updateInput('b');">
+                    </td>
+        </div>
+        </td>
+        </tr>
+        </table>
+        <div id="minputb"></div>
+        <div style="text-align:center;" id="txtbtn">
+            <a href="#" onClick="return popValue('b', '');">Очистить</a>
+            <a href="#" onClick="return popValue('b', 0);">Все 0</a>
+            <a href="#" onClick="return popValue('b', 1);">Все 1</a>
+            <a href="#" onClick="return popValue('b', 'r');">Рандом</a>
+        </div>
+        <div style="text-align:center;" id="txtbtn">
+            <a href="#" onClick="return cTranspose('b');">Транспонирование</a>
+            <a href="#" onClick="return cPower('b');">Матрица в степени</a>
+            <input type="number" name="pb" value="2" class="in3char">
+        </div>
+        <div style="text-align:center;margin-top: -5px;" id="txtbtn">
+            <a href="#" onClick="return cDeterminant('b');">Детерминант</a>
+            <a href="#" onClick="return cInverse('b');">Обратная матрица</a>
+            <input type="number" name="tb" value="3" class="in3char">
+        </div>
+    </div>
+    </td>
+    </tr>
+    <tr>
+        <td id="submitbtn" text-align="center" bgcolor="#dddddd">
+            <button onClick="return cAdd();">A + B</button>
+            <button onClick="return cSub();">A - B</button>
+            <button onClick="return cMultiple();">A * B</button>
+        </td>
+    </tr>
+    </table>
+    </form>
+    <div id="resultout"></div>
+    <div id="resultouta"></div>
+    <div id="resultoutb"></div>
+    
+    <!-- Далее функции на JavaScript -->
+    <script>
+    var matrixa = new Array(10);
+    var matrixb = new Array(10);
+    for (var i = 0; i < 10; i++) {
+        matrixa[i] = new Array(10);
+        matrixb[i] = new Array(10);
+        for (var j = 0; j < 10; j++) {
+            matrixa[i][j] = '';
+            matrixb[i][j] = '';
+        }
+    } // Создали пустую матрицу 10 х 10
+    
+    function updateInput(mname) {
+        eval("var rowField = document.calcf." + mname + "row");
+        eval("var columnField = document.calcf." + mname + "column");
+        var rowAmt = rowField.value;
+        var columnAmt = columnField.value;
+        if (rowAmt < 1) {
+            rowAmt = 1;
+            rowField.value = rowAmt;
+        }
+        if (rowAmt > 10) {
+            rowAmt = 10;
+            rowField.value = rowAmt;
+        }
+        if (columnAmt < 1) {
+            columnAmt = 1;
+            columnField.value = columnAmt;
+        }
+        if (columnAmt > 10) {
+            columnAmt = 10;
+            columnField.value = columnAmt;
+        }
+        var upd_inp = "<table>";
+        for (var i = 0; i < rowAmt; i++) {
+            upd_inp += "<tr>"; //Начинаем с новой строчки
+            for (var j = 0; j < columnAmt; j++) {
+                if (mname == 'a')
+                    upd_inp += '<td><input type="text" name="a' + i + j + '" value="' + matrixa[i][j] + '" "></td>';
+                if (mname == 'b')
+                    upd_inp += '<td><input type="text" name="b' + i + j + '" value="' + matrixb[i][j] + '" "></td>';
+            }
+            upd_inp += "</tr>";
+        }
+        upd_inp += "</table>";
+        document.getElementById("minput" + mname).innerHTML = upd_inp;
+    } // Функция считывает (и в случае некорректно введных значений присваивает корректное значение) количество строчек и столбцов
+    // В цикле считывает значения элементов матрицы
+
+    function popValue(mname, mtype) {
+        for (var i = 0; i < 10; i++) {
+            for (var j = 0; j < 10; j++) {
+                var thisVal = mtype;
+                if (mtype == 'r')
+                    thisVal = Math.floor(Math.random() * 10); // генератор рандомных элементов
+                eval("var thisField = document.calcf." + mname + i + j);
+                if (mname == 'a')
+                    matrixa[i][j] = thisVal;
+                if (mname == 'b')
+                    matrixb[i][j] = thisVal;
+                if (!(thisField == undefined))
+                    thisField.value = thisVal;
+            }
+        }
+        return false;
+    }
+    updateInput('a');
+    updateInput('b');
+    var aArray = new Array();
+    var bArray = new Array();
+    var resultArray = new Array();
+    var aValid = true;
+    var bValid = true;
+    var aRowAmt = 0;
+    var bRowAmt = 0;
+    var aColumnAmt = 0;
+    var bColumnAmt = 0;
+    var hasError = false;
+    var errMsg = "";
+    function cClear() {
+        document.getElementById("resultout").innerHTML = "";
+        document.getElementById("resultouta").innerHTML = "";
+        document.getElementById("resultoutb").innerHTML = "";
+        aValid = true;
+        bValid = true;
+        hasError = false;
+        errMsg = "";
+        aArray = new Array();
+        bArray = new Array();
+        resultArray = new Array();
+
+        var tempRow = document.calcf.arow.value + "";
+        var tempColumn = document.calcf.acolumn.value + "";
+        if ((tempRow.length > 0) && (tempColumn.length > 0) && (isInteger(tempRow)) && (isInteger(tempColumn))) {
+            tempRow = parseInt(tempRow);
+            tempColumn = parseInt(tempColumn);
+            if ((tempRow > 0) && (tempRow < 11) && (tempColumn > 0) && (tempColumn < 11)) {
+                for (var i = 0; i < tempRow; i++) {
+                    aArray[i] = new Array();
+                    for (var j = 0; j < tempColumn; j++) {
+                        eval("var tempVal = document.calcf.a" + i + j + ".value");
+                        var tempValStr = "" + tempVal;
+                        if (tempValStr.length > 0) {
+                            if (!isNumber(tempValStr)) {
+                                aValid = false;
+                            } else {
+                                tempVal = parseFloat(tempVal);
+                            }
+                        } else {
+                            tempVal = 0;
+                        }
+                        aArray[i][j] = tempVal;
+                    }
+                }
+                aRowAmt = tempRow;
+                aColumnAmt = tempColumn;
+            } else {
+                aValid = false;
+            }
+        } else {
+            aValid = false;
+        }
+        var tempRow = document.calcf.brow.value + "";
+        var tempColumn = document.calcf.bcolumn.value + "";
+        if ((tempRow.length > 0) && (tempColumn.length > 0) && (isInteger(tempRow)) && (isInteger(tempColumn))) {
+            tempRow = parseInt(tempRow);
+            tempColumn = parseInt(tempColumn);
+            if ((tempRow > 0) && (tempRow < 11) && (tempColumn > 0) && (tempColumn < 11)) {
+                for (var i = 0; i < tempRow; i++) {
+                    bArray[i] = new Array();
+                    for (var j = 0; j < tempColumn; j++) {
+                        eval("var tempVal = document.calcf.b" + i + j + ".value");
+                        var tempValStr = "" + tempVal;
+                        if (tempValStr.length > 0) {
+                            if (!isNumber(tempValStr)) {
+                                bValid = false;
+                            } else {
+                                tempVal = parseFloat(tempVal);
+                            }
+                        } else {
+                            tempVal = 0;
+                        }
+                        bArray[i][j] = tempVal;
+                    }
+                }
+                bRowAmt = tempRow;
+                bColumnAmt = tempColumn;
+            } else {
+                bValid = false;
+            }
+        } else {
+            bValid = false;
+        }
+    }
+    function showArray(saArray) {
+        var saOut = '<table class="matrixTable"><tr><th></th><th><table>';
+        for (var i = 0; i < saArray.length; i++) {
+            saOut += '<tr>';
+            for (var j = 0; j < saArray[i].length; j++)
+                saOut += '<td>' + formatNum(saArray[i][j]) + '</td>';
+            saOut += '</tr>';
+        }
+        saOut += '</table></th><th></th></tr></table>';
+        return saOut;
+    }
+
+    function showErr(seID, seMsg) {
+        document.getElementById(seID).innerHTML = seMsg;
+    }
+
+    function showResult(srID, srNote, srVar) {
+        document.getElementById(srID).innerHTML = '<h2 class="h2result">Результат</h2><table><tr><td valign="top" nowrap><span class="verybigtext">' + srNote + '</span><br><br></td><td valign="top">' + srVar + '</td></tr></table>';
+    }
+
+    function cPower(mname) {
+        cClear();
+        var ctNum = 1;
+        var tempArray = new Array();
+        var ctDesc = '';
+        if (mname == 'a') {
+            ctNum = document.calcf.pa.value + "";
+            if (!aValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+            }
+            if (aRowAmt != aColumnAmt) {
+                hasError = true;
+                errMsg += '<div class="err">Матрица должны быть квадратная</div>';
+            }
+            tempArray = aArray;
+            ctDesc = 'A<sup>' + ctNum + '</sup> =';
+        } else {
+            ctNum = document.calcf.pb.value + "";
+            if (!bValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы </div>';
+            }
+            if (bRowAmt != bColumnAmt) {
+                hasError = true;
+                errMsg += '<div class="err">Матрица должны быть квадратная</div>';
+            }
+            tempArray = bArray;
+            ctDesc = 'B<sup>' + ctNum + '</sup> =';
+        }
+        if ((ctNum.length < 1) || (!isInteger(ctNum))) {
+            errMsg += '<div class="err">Укажите положительное целое значение степени</div>';
+            hasError = true;
+        } else {
+            ctNum = parseInt(ctNum);
+            if (ctNum < 1) {
+                errMsg += '<div class="err">Укажите положительное целое значение степени</div>';
+                hasError = true;
+            }
+        }
+
+        if (hasError) {
+            showErr("resultout" + mname, errMsg);
+        } else {
+            resultArray = tempArray;
+            var tempSize = tempArray.length;
+            for (var m = 0; m < (ctNum - 1); m++) {
+                var newResultA = new Array();
+                for (var i = 0; i < tempSize; i++) {
+                    newResultA[i] = new Array();
+                    for (var j = 0; j < tempSize; j++) {
+                        newResultA[i][j] = 0;
+                        for (var k = 0; k < tempSize; k++) {
+                            newResultA[i][j] += resultArray[i][k] * tempArray[k][j];
+                        }
+                    }
+                }
+                resultArray = newResultA;
+            }
+            showResult("resultout" + mname, ctDesc, showArray(resultArray));
+        }
+        return false;
+    } // Возведение в степень
+
+    function findDet(fdArray, fdSize) {
+        if (fdSize < 3) {
+            if (fdSize < 2) {
+                return fdArray[0][0];
+            } else {
+                return ( fdArray[0][0] * fdArray[1][1] - fdArray[0][1] * fdArray[1][0]) ;
+            }
+        } else {
+            var signVal = -1;
+            var tempOutVal = 0;
+            for (var i = 0; i < fdSize; i++) {
+                signVal *= -1;
+                var tempArray = new Array();
+                var c = 0;
+                for (var j = 0; j < fdSize; j++) {
+                    if (i != j) {
+                        tempArray[c] = new Array();
+                        for (var k = 1; k < fdSize; k++) {
+                            tempArray[c][k - 1] = fdArray[j][k];
+                        }
+                        c++;
+                    }
+                }
+                tempOutVal += signVal * fdArray[i][0] * findDet(tempArray, (fdSize - 1));
+            }
+            return tempOutVal;
+        }
+    } 
+
+    function cDeterminant(mname) {
+        cClear();
+        var cdSize = 1;
+        var tempArray = new Array();
+        var ctDesc = '';
+        if (mname == 'a') {
+            if (!aValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+            }
+            if (aRowAmt != aColumnAmt) {
+                hasError = true;
+                errMsg += '<div class="err">Матрица должны быть квадратная</div>';
+            }
+            cdSize = aRowAmt;
+            tempArray = aArray;
+            ctDesc = 'Детерминант матрицы А =';
+        } else {
+            if (!bValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+            }
+            if (bRowAmt != bColumnAmt) {
+                hasError = true;
+                errMsg += '<div class="err">Матрица должны быть квадратная</div>';
+            }
+            cdSize = bRowAmt;
+            tempArray = bArray;
+            ctDesc = 'Детерминант матрицы В =';
+        }
+
+        if (hasError) {
+            showErr("resultout" + mname, errMsg);
+        } else {
+            document.getElementById("resultout" + mname).innerHTML = '<h2 class="h2result">Result</h2><p class="verybigtext">' + ctDesc + ' ' + findDet(tempArray, cdSize) + '</p>';
+
+        }
+        showResult("resultout"+mname, ctDesc, findDet(tempArray, cdSize));
+        return false;
+    } // Детерминант
+    
+    function cInverse(mname) {
+        cClear();
+        var cdSize = 1;
+        var tempArray = new Array();
+        var ctDesc = '';
+        if (mname == 'a') {
+            if (!aValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+            }
+            if (aRowAmt != aColumnAmt) {
+                hasError = true;
+                errMsg += '<div class="err">Матрица должны быть квадратная</div>';
+            }
+            cdSize = aRowAmt;
+            tempArray = aArray;
+            ctDesc = 'A<sup>-1</sup> =';
+        } else {
+            if (!bValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы В</div>';
+            }
+            if (bRowAmt != bColumnAmt) {
+                hasError = true;
+                errMsg += '<div class="err">Матрица должны быть квадратная</div>';
+            }
+            cdSize = bRowAmt;
+            tempArray = bArray;
+            ctDesc = 'B<sup>-1</sup> =';
+        }
+
+        if (hasError) {
+            showErr("resultout" + mname, errMsg);
+        } else {
+            var tempDetVal = findDet(tempArray, cdSize);
+            if (tempDetVal == 0) {
+                showErr("resultout" + mname, '<div class="err">Детерминант матрицы равен 0. Невозможно найти обратную матрицу</div>');
+            } else {
+                if (cdSize < 2) {
+                    resultArray[0] = new Array();
+                    resultArray[0][0] = 1 / tempArray[0][0];
+                } else {
+                    for (var i = 0; i < cdSize; i++) {
+                        resultArray[i] = new Array();
+                        for (var j = 0; j < cdSize; j++) {
+                            var signVal = Math.pow(-1, (i + j));
+
+                            var x = 0;
+                            var y = 0;
+                            var tempArray2 = new Array();
+                            for (var m = 0; m < cdSize; m++) {
+                                if (m != i) {
+                                    tempArray2[x] = new Array();
+                                    y = 0;
+                                    for (var n = 0; n < cdSize; n++) {
+                                        if (n != j) {
+                                            tempArray2[x][y] = tempArray[m][n];
+                                            y++;
+                                        }
+                                    }
+                                    x++;
+                                }
+                            }
+                            resultArray[i][j] = signVal * findDet(tempArray2, (cdSize - 1));
+                        }
+                    }
+
+                    for (var i = 0; i < cdSize; i++) {
+                        for (var j = 0; j < cdSize; j++) {
+                            tempArray[j][i] = resultArray[i][j] / tempDetVal;
+                        }
+                    }
+                    resultArray = tempArray;
+                }
+                showResult("resultout" + mname, ctDesc, showArray(resultArray));
+            }
+        }
+        return false;
+    }
+
+    function cTranspose(mname) {
+        cClear();
+        var ctNum = 1;
+        var tempArray = new Array();
+        var ctDesc = '';
+        if (mname == 'a') {
+            if (!aValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+            }
+            tempArray = aArray;
+            ctDesc = 'A<sup>T</sup> =';
+        } else {
+            if (!bValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы В</div>';
+            }
+            tempArray = bArray;
+            ctDesc = 'B<sup>T</sup> =';
+        }
+        if (hasError) {
+            showErr("resultout" + mname, errMsg);
+        } else {
+            for (var i = 0; i < tempArray[0].length; i++) {
+                resultArray[i] = new Array();
+                for (var j = 0; j < tempArray.length; j++) {
+                    resultArray[i][j] = tempArray[j][i];
+                }
+            }
+            showResult("resultout" + mname, ctDesc, showArray(resultArray));
+        }
+        return false;
+    } // Транспонирование
+
+    function cAdd() {
+        cClear();
+        if (!aValid) {
+            hasError = true;
+            errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+        }
+        if (!bValid) {
+            hasError = true;
+            errMsg += '<div class="err">Укажите верные данные для матрицы В</div>';
+        }
+        if (hasError) {
+            showErr("resultout", errMsg);
+        } else {
+            if ((aRowAmt == bRowAmt) && (aColumnAmt == bColumnAmt)) {
+                for (var i = 0; i < aRowAmt; i++) {
+                    resultArray[i] = new Array();
+                    for (var j = 0; j < aColumnAmt; j++) {
+                        resultArray[i][j] = aArray[i][j] + bArray[i][j];
+                    }
+                }
+                showResult("resultout", 'A + B =', showArray(resultArray));
+            } else {
+                showErr("resultout", '<div class="err">Матрицы должны быть равного размера</div>');
+            }
+        }
+        return false;
+    } // Сложение
+
+    function cSub() {
+        cClear();
+        if (!aValid) {
+            hasError = true;
+            errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+        }
+        if (!bValid) {
+            hasError = true;
+            errMsg += '<div class="err">Укажите верные данные для матрицы В</div>';
+        }
+        if (hasError) {
+            showErr("resultout", errMsg);
+        } else {
+            if ((aRowAmt == bRowAmt) && (aColumnAmt == bColumnAmt)) {
+                for (var i = 0; i < aRowAmt; i++) {
+                    resultArray[i] = new Array();
+                    for (var j = 0; j < aColumnAmt; j++) {
+                        resultArray[i][j] = aArray[i][j] - bArray[i][j];
+                    }
+                }
+                showResult("resultout", 'A - B =', showArray(resultArray));
+            } else {
+                showErr("resultout", '<div class="err">Матрицы должны быть равного размера</div>');
+            }
+        }
+        return false;
+    } // Вычитание
+
+    function cMultiple() {
+        cClear();
+        if (!aValid) {
+            hasError = true;
+            errMsg = '<div class="err">PУкажите верные данные для матрицы А</div>';
+        }
+        if (!bValid) {
+            hasError = true;
+            errMsg += '<div class="err">Укажите верные данные для матрицы В</div>';
+        }
+        if (hasError) {
+            showErr("resultout", errMsg);
+        } else {
+            if (aColumnAmt == bRowAmt) {
+                for (var i = 0; i < aRowAmt; i++) {
+                    resultArray[i] = new Array();
+                    for (var j = 0; j < bColumnAmt; j++) {
+                        resultArray[i][j] = 0;
+                        for (var k = 0; k < aColumnAmt; k++) {
+                            resultArray[i][j] += aArray[i][k] * bArray[k][j];
+                        }
+                    }
+                }
+                showResult("resultout", 'A * B =', showArray(resultArray));
+            } else {
+                showErr("resultout", '<div class="err">Число столбцов матрицы А должно равняться числу строк матрицы В</div>');
+            }
+        }
+        return false;
+    } // Умножение матриц
+    </script>
+    </div>
+</div>
+</body>
+</html>
