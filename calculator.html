@@ -103,7 +103,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container my-2">
         <a class="navbar-brand p-0" href="/">
-            <img src="#" alt="Logo" width="50" />
+            <img src="4752661.png" alt="Logo" width="50" />
         </a>
         <button
           class="navbar-toggler"
@@ -120,17 +120,17 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="home.html"
-                >Home</a
+                >О проекте</a
               >
             </li>
             <li class="nav-item">
-              <a class="nav-link active" href="calculator-menu-page.html">Menu</a>
+              <a class="nav-link active" href="calculator-menu-page.html">Меню</a>
             </li>
-            <li class="nav-item">
+            <!--<li class="nav-item">
               <a class="nav-link" aria-current="page" href="additional.html"
                 >Something</a
               >
-            </li>
+            </li>-->
           </ul>
         </div>
       </div>
@@ -185,6 +185,7 @@
                 <div style="text-align:center;margin-top: -5px;" id="txtbtn">
                     <a href="#" onClick="return cDeterminant('a');">Детерминант</a>
                     <a href="#" onClick="return cInverse('a');">Обратная матрица</a>
+                    <a href="#" onClick="return cTimes('a');">Умножить на</a>
                     <input type="number" name="ta" value="3" class="in3char">
                 </div>
         </div>
@@ -225,6 +226,7 @@
         <div style="text-align:center;margin-top: -5px;" id="txtbtn">
             <a href="#" onClick="return cDeterminant('b');">Детерминант</a>
             <a href="#" onClick="return cInverse('b');">Обратная матрица</a>
+            <a href="#" onClick="return cTimes('b');">Умножить на</a>
             <input type="number" name="tb" value="3" class="in3char">
         </div>
     </div>
@@ -481,6 +483,48 @@
         }
         return false;
     } // Возведение в степень
+    function cTimes(mname) {
+        cClear();
+        var ctNum = 1;
+        var tempArray = new Array();
+        var ctDesc = '';
+        if (mname == 'a') {
+            ctNum = document.calcf.ta.value + "";
+            if (!aValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы А</div>';
+            }
+            tempArray = aArray;
+            ctDesc = 'A &#215 ' + ctNum + ' =';
+        } else {
+            ctNum = document.calcf.tb.value + "";
+            if (!bValid) {
+                hasError = true;
+                errMsg = '<div class="err">Укажите верные данные для матрицы B</div>';
+            }
+            tempArray = bArray;
+            ctDesc = 'B &#215 ' + ctNum + ' =';
+        }
+        if ((ctNum.length < 1) || (!isNumber(ctNum))) {
+            errMsg += '<div class="err">Укажите значения для умножения</div>';
+            hasError = true;
+        }
+
+        if (hasError) {
+            showErr("resultout" + mname, errMsg);
+        } else {
+            ctNum = parseFloat(ctNum);
+            for (var i = 0; i < tempArray.length; i++) {
+                resultArray[i] = new Array();
+                for (var j = 0; j < tempArray[i].length; j++) {
+                    resultArray[i][j] = tempArray[i][j] * ctNum;
+                }
+            }
+            showResult("resultout" + mname, ctDesc, showArray(resultArray));
+        }
+        return false;
+    } // Умножение на число
+    // &#215 - крестик умножения
 
     function findDet(fdArray, fdSize) {
         if (fdSize < 3) {
